@@ -3,7 +3,7 @@
 ## Data ingestion
 
 ### Kafka
-For Kafka, we can use Kinesis Data Firehose, which, since the second half of 2023, allows data to be deposited in object storage in the Parquet format, provided that the Kafka source is an AWS MSK (Managed Streaming for Kafka). If Kafka is not an MSK, we can use Glu Jobs Spark Streaming to persist this data in ingestion or even Lambda Functions.
+For Kafka, we can use Kinesis Data Firehose, which, since the second half of 2023, allows data to be deposited in object storage in the Parquet format, provided that the Kafka source is an AWS MSK (Managed Streaming for Kafka). If Kafka is not an MSK, we can use Spark Streaming to persist this data in ingestion or even Lambda Functions.
 
 ### Postgres
 
@@ -14,7 +14,7 @@ DMS has a feature for capturing data change in ongoing replication. Still, for s
 We can use EventBridge along with Lambda functions to perform ingestion from API calls. If more robustness is needed, we can use S3 landing events as triggers for Lambda Function's execution.
 
 ## Processing
-The choice of Glue was due to its simplicity and cost-effectiveness for some lower-volume and less frequent tasks, as there is no need to manage a cluster to execute a job. The scheduler for these tasks is the built-in workflow tool in AWS Glue. Additionally, AWS Identity and Access Management (IAM) is required to grant access to the physical data and/or cataloged tables.
+The choice of Glue was due to its simplicity and cost-effectiveness running Apache Spark and, for some lower-volume and less frequent tasks, as there is no need to manage a Spark cluster to execute a job. The scheduler for these tasks is the built-in workflow tool in AWS Glue. Additionally, AWS Identity and Access Management (IAM) is required to grant access to the physical data and/or cataloged tables.
 
 #### Ingestion layer
 All the chosen ingestion options can write files in Parquet format, and they should do so. In this context, the only access that should occur is from the jobs responsible for cleaning and landing these data into the cleaned layer.
